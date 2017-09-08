@@ -1,4 +1,4 @@
-﻿/****************************************************************************
+/****************************************************************************
  * NVorbis                                                                  *
  * Copyright (C) 2012, Andrew Ward <afward@gmail.com>                       *
  *                                                                          *
@@ -62,7 +62,9 @@ namespace NAudio.Vorbis
             }
             set
             {
-                if (value < 0 || value > Length) throw new ArgumentOutOfRangeException("value");
+                if (value < 0) throw new ArgumentOutOfRangeException("value");
+
+                if (value > Length) value = Length;
 
                 _reader.DecodedTime = TimeSpan.FromSeconds((double)value / _reader.SampleRate / _reader.Channels / sizeof(float));
             }
