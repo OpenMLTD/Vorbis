@@ -64,7 +64,18 @@ namespace NAudio.Vorbis
             {
                 if (value < 0) throw new ArgumentOutOfRangeException("value");
 
-                if (value > Length) value = Length;
+                var position = Position;
+                if (value == position) return;
+
+                var length = Length;
+                if (value > length)
+                {
+                    if (position == length)
+                    {
+                        return;
+                    }
+                    value = Length;
+                }
 
                 _reader.DecodedTime = TimeSpan.FromSeconds((double)value / _reader.SampleRate / _reader.Channels / sizeof(float));
             }
@@ -81,6 +92,17 @@ namespace NAudio.Vorbis
 
             // make sure we don't have an odd count
             count -= count % _reader.Channels;
+
+            var maxLeftover = (int)(Length - Position);
+            if (count * sizeof(float) > maxLeftover)
+            {
+                count = maxLeftover / sizeof(float);
+            }
+
+            if (count == 0)
+            {
+                return 0;
+            }
 
             // get the buffer, creating a new one if none exists or the existing one is too small
             var cb = _conversionBuffer ?? (_conversionBuffer = new float[count]);
