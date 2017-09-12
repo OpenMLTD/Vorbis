@@ -38,15 +38,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="NAudio">
-      <HintPath>..\packages\NAudio.1.5\lib\NAudio.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\NAudio\NAudio\NAudio.csproj">
+      <Project>{da4f02e3-0b5e-42cd-b8d9-5583fa51d66e}</Project>
+      <Name>NAudio</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\NVorbis\NVorbis\NVorbis.csproj">
       <Project>{a372e591-dfef-49c4-9c82-98c4361efccd}</Project>
       <Name>NVorbis</Name>
